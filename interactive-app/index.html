@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AWS Cloud Practitioner Interactive Practice Exams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- Dynamic Gradient Background Effects -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+  <div class="bg-glow bg-glow-3"></div>
+
+  <!-- Main Container -->
+  <div class="app-container">
+    
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-logo" id="header-logo-btn">
+        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <div class="logo-text">
+          <h1>AWS Cloud Practitioner</h1>
+          <span>Interactive Exam Suite</span>
+        </div>
+      </div>
+
+      <div class="header-controls">
+        <button id="theme-toggle" class="btn-icon" aria-label="Toggle Theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- DASHBOARD VIEW -->
+    <main id="dashboard-view" class="view-panel active">
+      <!-- Global Progress & Stats -->
+      <section class="stats-overview glass-panel">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon-wrapper blue">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Total Questions</span>
+              <span class="stat-value" id="global-total-questions">1,142</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper orange">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Answered Questions</span>
+              <span class="stat-value" id="global-answered-questions">0</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper purple">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Overall Accuracy</span>
+              <span class="stat-value" id="global-accuracy">0%</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrapper green">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                <line x1="4" y1="22" x2="4" y2="15"></line>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Exams Completed</span>
+              <span class="stat-value" id="global-completed-exams">0/23</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-bar-container">
+          <div class="progress-info">
+            <span>Overall Study Progress</span>
+            <span id="global-progress-percent">0%</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill" id="global-progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Search & Filter Controls -->
+      <section class="dashboard-controls">
+        <div class="search-box glass-panel">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="exam-search" placeholder="Search exams...">
+        </div>
+        <div class="filter-actions">
+          <button class="btn btn-secondary active" data-filter="all">All</button>
+          <button class="btn btn-secondary" data-filter="completed">Completed</button>
+          <button class="btn btn-secondary" data-filter="in-progress">In Progress</button>
+          <button class="btn btn-secondary" data-filter="unattempted">Unattempted</button>
+        </div>
+      </section>
+
+      <!-- Mock Exam / Custom Exam Panel -->
+      <section class="mock-exam-banner glass-panel">
+        <div class="mock-content">
+          <span class="badge badge-accent">EXAM SIMULATION</span>
+          <h2>Full Length Random Mock Exam</h2>
+          <p>Practice with 65 random questions compiled from all 23 exams. Simulates the actual AWS exam timing (90 minutes) and interface configuration.</p>
+          <div class="mock-details">
+            <div class="detail-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <span>65 Questions</span>
+            </div>
+            <div class="detail-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <span>90 Minutes</span>
+            </div>
+            <div class="detail-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+              <span>70% Passing Score</span>
+            </div>
+          </div>
+        </div>
+        <div class="mock-actions">
+          <button class="btn btn-primary btn-glow" id="start-mock-btn">Start Mock Exam</button>
+        </div>
+      </section>
+
+      <!-- Exam Cards Grid -->
+      <section class="exams-grid" id="exams-grid-container">
+        <!-- Injected via JavaScript -->
+      </section>
+    </main>
+
+    <!-- EXAM WORKSPACE VIEW -->
+    <main id="exam-view" class="view-panel">
+      <div class="workspace-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="workspace-sidebar glass-panel">
+          <div class="sidebar-header">
+            <h3>Questions</h3>
+            <span class="progress-fraction" id="nav-progress-fraction">1 / 50</span>
+          </div>
+          <div class="nav-bubbles-container" id="nav-bubbles-grid">
+            <!-- Bubbles injected via JavaScript -->
+          </div>
+          <div class="sidebar-legend">
+            <div class="legend-item"><span class="bullet legend-unattempted"></span> Unattempted</div>
+            <div class="legend-item"><span class="bullet legend-current"></span> Current</div>
+            <div class="legend-item"><span class="bullet legend-answered"></span> Answered</div>
+            <div class="legend-item"><span class="bullet legend-flagged"></span> Flagged</div>
+          </div>
+        </aside>
+
+        <!-- Main Workspace Panel -->
+        <section class="workspace-main">
+          <!-- Top Panel Control -->
+          <div class="workspace-header glass-panel">
+            <div class="header-left">
+              <button class="btn btn-secondary btn-icon-text" id="exit-exam-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>Dashboard</span>
+              </button>
+              <h2 id="active-exam-title">Practice Exam 1</h2>
+              <span class="badge" id="active-mode-badge">Study Mode</span>
+            </div>
+            
+            <div class="header-right">
+              <div class="timer-box" id="exam-timer-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="timer-icon">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span id="exam-timer">--:--</span>
+              </div>
+              <button class="btn btn-accent" id="submit-exam-btn">Submit Exam</button>
+            </div>
+          </div>
+
+          <!-- Question Card -->
+          <div class="question-container" id="question-card">
+            <!-- Question Content injected via JavaScript -->
+          </div>
+
+          <!-- Bottom Control Bar -->
+          <div class="workspace-footer glass-panel">
+            <div class="footer-left">
+              <button class="btn btn-secondary btn-icon-text" id="prev-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+                <span>Previous</span>
+              </button>
+              <button class="btn btn-secondary btn-icon-text" id="flag-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flag-icon">
+                  <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                  <line x1="4" y1="22" x2="4" y2="15"></line>
+                </svg>
+                <span>Flag for Review</span>
+              </button>
+            </div>
+
+            <div class="footer-center">
+              <button class="btn btn-secondary" id="study-check-btn">Check Answer</button>
+            </div>
+
+            <div class="footer-right">
+              <button class="btn btn-secondary btn-icon-text" id="next-btn">
+                <span>Next</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- RESULTS VIEW -->
+    <main id="results-view" class="view-panel">
+      <div class="results-layout">
+        
+        <!-- Score Dashboard -->
+        <section class="results-dashboard glass-panel">
+          <div class="score-circle-wrapper">
+            <svg class="progress-ring" viewBox="0 0 160 160">
+              <circle class="progress-ring-circle-bg" cx="80" cy="80" r="70" stroke-width="12"></circle>
+              <circle class="progress-ring-circle-fill" id="results-score-ring" cx="80" cy="80" r="70" stroke-width="12"></circle>
+            </svg>
+            <div class="score-circle-text">
+              <span id="results-percentage">0%</span>
+              <span class="score-label">Score</span>
+            </div>
+          </div>
+
+          <div class="result-verdict" id="results-verdict">
+            Passed
+          </div>
+
+          <div class="results-stats-grid">
+            <div class="r-stat-item">
+              <span class="r-stat-val" id="results-correct">0</span>
+              <span class="r-stat-lbl">Correct</span>
+            </div>
+            <div class="r-stat-item">
+              <span class="r-stat-val" id="results-incorrect">0</span>
+              <span class="r-stat-lbl">Incorrect</span>
+            </div>
+            <div class="r-stat-item">
+              <span class="r-stat-val" id="results-skipped">0</span>
+              <span class="r-stat-lbl">Skipped</span>
+            </div>
+            <div class="r-stat-item">
+              <span class="r-stat-val" id="results-time">00:00</span>
+              <span class="r-stat-lbl">Time Taken</span>
+            </div>
+          </div>
+
+          <div class="results-actions">
+            <button class="btn btn-primary" id="retry-exam-btn">Retry Exam</button>
+            <button class="btn btn-secondary" id="results-dashboard-btn">Back to Dashboard</button>
+          </div>
+        </section>
+
+        <!-- Detailed Review List -->
+        <section class="results-review glass-panel">
+          <div class="review-header">
+            <h3>Detailed Review</h3>
+            <div class="review-filters">
+              <button class="btn btn-secondary btn-sm active" data-review-filter="all">All</button>
+              <button class="btn btn-secondary btn-sm" data-review-filter="correct">Correct</button>
+              <button class="btn btn-secondary btn-sm" data-review-filter="incorrect">Incorrect</button>
+              <button class="btn btn-secondary btn-sm" data-review-filter="flagged">Flagged</button>
+            </div>
+          </div>
+
+          <div class="review-list" id="results-review-list">
+            <!-- Review items injected via JavaScript -->
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Exit Confirmation Modal -->
+  <div class="modal-overlay" id="exit-modal">
+    <div class="modal-content glass-panel">
+      <h3>Exit Active Exam?</h3>
+      <p>Are you sure you want to exit? In <strong>Exam Mode</strong>, your current progress will be lost. In <strong>Study Mode</strong>, your answers are saved.</p>
+      <div class="modal-buttons">
+        <button class="btn btn-secondary" id="exit-cancel-btn">Cancel</button>
+        <button class="btn btn-accent" id="exit-confirm-btn">Yes, Exit</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="exams_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Certified Cloud Practitioner - لوحة المراجعة التفاعلية</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        aws: {
+                            dark: '#1B365D',
+                            light: '#232F3E',
+                            orange: '#FF9900',
+                            accent: '#3F83F8',
+                            slate: '#0F172A',
+                            panel: '#1E293B'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Cairo', 'Inter', sans-serif;
+        }
+        
+        /* Glassmorphism utility */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .dark .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #475569;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        /* Perspective for Flashcard Flip */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen transition-colors duration-300">
+
+    <!-- Hero / Header Section -->
+    <div class="relative overflow-hidden bg-gradient-to-tr from-slate-900 via-aws-light to-aws-dark text-white py-12 px-6 shadow-xl">
+        <!-- Abstract Shapes -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-aws-orange opacity-10 rounded-full blur-3xl -mr-20 -mt-20"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-aws-accent opacity-20 rounded-full blur-3xl -ml-20 -mb-20"></div>
+
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center relative z-10">
+            <div class="text-center md:text-right mb-6 md:mb-0">
+                <span class="bg-aws-orange/20 text-aws-orange border border-aws-orange/30 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-3 inline-block">
+                    AWS CLF-C02
+                </span>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight mb-2">
+                    المنصة التفاعلية لمراجعة اختبار AWS Cloud Practitioner
+                </h1>
+                <p class="text-slate-300 text-sm md:text-base font-light max-w-2xl leading-relaxed">
+                    منصة ويب حديثة تسهل عليك مراجعة جميع الخدمات، الكلمات المفتاحية الدلالية، والتحضير الفوري للامتحان من خلال كروت المراجعة التفاعلية والاختبارات السريعة.
+                </p>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="p-3 bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl transition-all shadow-lg flex items-center justify-center" title="تبديل الوضع الليلي">
+                    <!-- Sun Icon (hidden in light, shown in dark) -->
+                    <svg id="sunIcon" class="w-5 h-5 text-aws-orange hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+                    </svg>
+                    <!-- Moon Icon (shown in light, hidden in dark) -->
+                    <svg id="moonIcon" class="w-5 h-5 text-slate-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+
+                <!-- Status Badge -->
+                <div class="bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 px-4 py-2 rounded-xl flex items-center gap-2 text-sm font-semibold">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    جاهز للامتحان
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="max-w-7xl mx-auto px-6 -mt-6 relative z-20">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl rounded-2xl p-2 flex flex-wrap gap-1 md:gap-2">
+            <button onclick="switchTab('servicesTab')" id="btn-servicesTab" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-center font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 bg-aws-dark text-white shadow-md">
+                🔍 الخدمات والكلمات المفتاحية
+            </button>
+            <button onclick="switchTab('flashcardsTab')" id="btn-flashcardsTab" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-center font-semibold text-sm transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-850 flex items-center justify-center gap-2">
+                🃏 كروت المراجعة النشطة
+            </button>
+            <button onclick="switchTab('responsibilityTab')" id="btn-responsibilityTab" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-center font-semibold text-sm transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-850 flex items-center justify-center gap-2">
+                ⚖️ المسؤولية المشتركة
+            </button>
+            <button onclick="switchTab('pillarsTab')" id="btn-pillarsTab" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-center font-semibold text-sm transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-850 flex items-center justify-center gap-2">
+                🏗️ الأعمدة الستة
+            </button>
+            <button onclick="switchTab('pricingTab')" id="btn-pricingTab" class="tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-center font-semibold text-sm transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-850 flex items-center justify-center gap-2">
+                💳 الدعم والفوترة
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-6 py-8">
+
+        <!-- Tab 1: Services & Keywords -->
+        <section id="servicesTab" class="tab-content block animate-fadeIn">
+            <!-- Search and Filter Bar -->
+            <div class="mb-8 flex flex-col lg:flex-row gap-4 justify-between items-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 rounded-2xl shadow-sm">
+                <!-- Search Input -->
+                <div class="relative w-full lg:w-96">
+                    <input type="text" id="searchInput" placeholder="ابحث باسم الخدمة، الوصف، أو الكلمة المفتاحية..." class="w-full pl-4 pr-10 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-aws-accent text-sm transition-all text-slate-950 dark:text-slate-50" />
+                    <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-slate-400">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </span>
+                </div>
+                
+                <!-- Category Filters (Horizontal Scroll) -->
+                <div class="flex items-center gap-2 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-thin">
+                    <button onclick="filterCategory('All')" class="category-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap bg-aws-accent text-white shadow-sm transition-all duration-200">الكل</button>
+                    <button onclick="filterCategory('Compute')" class="category-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition-all duration-200">الحوسبة (Compute)</button>
+                    <button onclick="filterCategory('Storage')" class="category-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition-all duration-200">التخزين (Storage)</button>
+                    <button onclick="filterCategory('Database')" class="category-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition-all duration-200">قواعد البيانات (Database)</button>
+                    <button onclick="filterCategory('Networking')" class="category-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition-all duration-200">الشبكات (Network)</button>
+                    <button onclick="filterCategory('Security')" class="category-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition-all duration-200">الأمن والامتثال (Security)</button>
+                    <button onclick="filterCategory('Management')" class="category-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition-all duration-200">الإدارة (Management)</button>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="mb-4 text-sm text-slate-500 dark:text-slate-400 flex justify-between items-center">
+                <div>عرض <span id="displayedCount" class="font-semibold text-aws-accent">0</span> من أصل <span id="totalCount" class="font-semibold">0</span> خدمة سحابية</div>
+                <button onclick="clearSearch()" class="text-xs text-aws-accent hover:underline hidden" id="resetSearchBtn">إعادة ضبط البحث والفلتر</button>
+            </div>
+
+            <!-- Services Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="servicesGrid">
+                <!-- Javascript will inject cards here -->
+            </div>
+        </section>
+
+        <!-- Tab 2: Flashcards -->
+        <section id="flashcardsTab" class="tab-content hidden animate-fadeIn">
+            <div class="max-w-3xl mx-auto">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">كروت المراجعة الذكية للكلمات المفتاحية</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">تحدَّ نفسك باستخدام الاستدعاء النشط (Active Recall). انظر للكلمات المفتاحية على واجهة الكرت، حاول تخمين الخدمة، ثم انقر لقلب الكرت ومعرفة النتيجة.</p>
+                </div>
+                
+                <!-- Flashcard Widget -->
+                <div class="perspective-1000 w-full h-80 cursor-pointer mb-8" onclick="flipCard()">
+                    <div id="flashcard-inner" class="transform-style-3d transition-transform duration-500 ease-out relative w-full h-full">
+                        <!-- Front of Card (Triggers/Scenario) -->
+                        <div class="backface-hidden absolute inset-0 bg-white dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-800 rounded-3xl shadow-xl p-8 flex flex-col justify-between items-center text-center">
+                            <span class="text-xs font-semibold px-3 py-1 bg-aws-orange/10 text-aws-orange border border-aws-orange/20 rounded-full">الكلمات الدلالية في السؤال (Trigger Keywords)</span>
+                            <div class="flex-grow flex items-center justify-center">
+                                <p id="card-trigger-text" class="text-lg md:text-xl font-bold text-slate-800 dark:text-slate-200 max-w-lg leading-relaxed"></p>
+                            </div>
+                            <span class="text-xs text-slate-400 flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                                انقر على الكرت للكشف عن الحل الصحيح
+                            </span>
+                        </div>
+                        
+                        <!-- Back of Card (AWS Service) -->
+                        <div class="backface-hidden rotate-y-180 absolute inset-0 bg-gradient-to-br from-aws-dark to-slate-900 border-2 border-aws-orange/30 rounded-3xl shadow-xl p-8 flex flex-col justify-between items-center text-center text-white">
+                            <span class="text-xs font-semibold px-3 py-1 bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 rounded-full">الحل والخدمة الصحيحة</span>
+                            <div class="flex-grow flex flex-col items-center justify-center gap-2">
+                                <h3 id="card-service-name" class="text-2xl md:text-3xl font-extrabold text-aws-orange tracking-wide"></h3>
+                                <p id="card-arabic-desc" class="text-sm md:text-base font-light text-slate-200 max-w-lg leading-relaxed"></p>
+                            </div>
+                            <span class="text-xs text-slate-400">انقر مرة أخرى للعودة إلى واجهة الكرت</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex justify-between items-center mb-8 gap-4">
+                    <button onclick="prevCard()" class="px-5 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-100 dark:hover:bg-slate-850 shadow-sm flex items-center gap-2 text-sm">
+                        السابق ➡️
+                    </button>
+                    
+                    <div class="text-sm font-semibold text-slate-500 dark:text-slate-400">
+                        الكرت <span id="currentCardNum" class="text-aws-accent">1</span> من أصل <span id="totalCardsNum">0</span>
+                    </div>
+
+                    <button onclick="nextCard()" class="px-5 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 font-semibold rounded-xl hover:bg-slate-100 dark:hover:bg-slate-850 shadow-sm flex items-center gap-2 text-sm">
+                        ⬅️ التالي
+                    </button>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="w-full bg-slate-200 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden mb-8">
+                    <div id="progressBar" class="bg-aws-orange h-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+
+                <!-- Action buttons -->
+                <div class="flex justify-center gap-4">
+                    <button onclick="shuffleCards()" class="px-6 py-3 bg-aws-accent text-white font-semibold rounded-xl hover:bg-blue-600 shadow-md transition-all flex items-center gap-2 text-sm">
+                        🔀 ترتيب عشوائي للأسئلة
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 3: Shared Responsibility -->
+        <section id="responsibilityTab" class="tab-content hidden animate-fadeIn">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">نموذج المسؤولية المشتركة (Shared Responsibility Model)</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">تذكر القاعدة الذهبية: AWS مسؤولة عن أمن السحابة (البنية التحتية والعتاد)، بينما العميل مسؤول عن أمن ما بداخل السحابة (البيانات والوصول).</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Customer Responsibility -->
+                <div class="bg-white dark:bg-slate-900 border-t-4 border-aws-orange border-r border-l border-b border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-md transition-all hover:shadow-lg">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-3 bg-aws-orange/10 text-aws-orange rounded-2xl">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">مسؤولية العميل (الأمن في السحابة - Security IN the Cloud)</h3>
+                            <p class="text-xs text-slate-400">العميل يتحكم بشكل كامل ويقوم بتهيئة هذه الطبقات بنفسه</p>
+                        </div>
+                    </div>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-850 rounded-xl">
+                            <span class="text-aws-orange font-bold mt-0.5 font-sans">✓</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-200">بيانات العميل (Customer Data)</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">تشفير البيانات وحمايتها (سواء أثناء الحفظ أو الانتقال) وتفعيل النسخ الاحتياطية.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-850 rounded-xl">
+                            <span class="text-aws-orange font-bold mt-0.5 font-sans">✓</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-200">إدارة الهوية والوصول (Identity & Access Management - IAM)</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">المستخدمين، كلمات المرور، الصلاحيات، المجموعات، وسياسات الدخول وتفعيل التحقق الثنائي MFA.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-850 rounded-xl">
+                            <span class="text-aws-orange font-bold mt-0.5 font-sans">✓</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-200">نظام التشغيل الافتراضي (Guest Operating System)</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">تحديث وترقيع (Patching) وإصلاح أنظمة التشغيل الخاصة بسيرفرات EC2 التي ينشئها العميل.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-850 rounded-xl">
+                            <span class="text-aws-orange font-bold mt-0.5 font-sans">✓</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-200">إعدادات الشبكة وجدر الحماية (Firewall & Network Configuration)</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">تعديل قواعد جدر الحماية الخاصة بالـ Security Groups والـ Network ACLs في الشبكة الخاصة VPC.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- AWS Responsibility -->
+                <div class="bg-white dark:bg-slate-900 border-t-4 border-aws-dark border-r border-l border-b border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-md transition-all hover:shadow-lg">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="p-3 bg-aws-dark/20 text-aws-accent rounded-2xl">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900 dark:text-white">مسؤولية AWS (الأمن الخاص بالسحابة - Security OF the Cloud)</h3>
+                            <p class="text-xs text-slate-400">تأمين البنية التحتية الرئيسية والمعدات المادية والخدمات المدارة</p>
+                        </div>
+                    </div>
+                    
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-850 rounded-xl">
+                            <span class="text-aws-accent font-bold mt-0.5 font-sans">✓</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-200">العتاد المادي للمخدمات ومراكز البيانات (Hardware & Global Infrastructure)</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">تأمين وصيانة البنية التحتية المادية للمناطق (Regions)، مناطق التوفر (AZs)، ومواقع الأطراف (Edge Locations) من حراسة مادية وكهرباء وتبريد.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-850 rounded-xl">
+                            <span class="text-aws-accent font-bold mt-0.5 font-sans">✓</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-200">برمجيات البنية التحتية (Software Infrastructure)</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">إدارة وتحديث طبقة المحاكاة الافتراضية (Hypervisor) والشبكات الفيزيائية الأساسية المربوطة بين الخوادم.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 p-3 bg-slate-50 dark:bg-slate-850 rounded-xl">
+                            <span class="text-aws-accent font-bold mt-0.5 font-sans">✓</span>
+                            <div>
+                                <h4 class="text-sm font-semibold text-slate-800 dark:text-slate-200">إدارة وتحديث الخدمات المدارة (Managed Services Security)</h4>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">إصلاح وتحديث البرمجيات ونظام التشغيل للخدمات المدارة بالكامل مثل (Amazon RDS, Amazon DynamoDB, Amazon S3) حيث لا يستطيع العميل الدخول للسيرفر.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Interactive Comparison of Service types -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 text-center">تقسيم المسؤولية حسب نوع الخدمة (IaaS vs PaaS vs SaaS)</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="p-4 bg-blue-50/50 dark:bg-slate-850 rounded-2xl border border-blue-100 dark:border-slate-800">
+                        <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider block mb-1">النوع الأول: IaaS</span>
+                        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200 mb-2">البنية التحتية كخدمة (مثال: EC2)</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                            <strong>العميل مسؤول عن:</strong> تثبيت وتحديث نظام التشغيل الافتراضي، إعداد التطبيقات، وإدارة جدر الحماية.<br/>
+                            <strong>AWS مسؤولة عن:</strong> المعدات المادية والكهرباء والشبكة والـ Hypervisor.
+                        </p>
+                    </div>
+                    
+                    <div class="p-4 bg-orange-50/50 dark:bg-slate-850 rounded-2xl border border-orange-100 dark:border-slate-800">
+                        <span class="text-xs font-bold text-orange-600 dark:text-orange-400 uppercase tracking-wider block mb-1">النوع الثاني: PaaS</span>
+                        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200 mb-2">المنصة كخدمة (مثال: RDS / Beanstalk)</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                            <strong>العميل مسؤول عن:</strong> الكود المرفوع، إعدادات التطبيق أو البيانات، وكلمات المرور الخاصة بقاعدة البيانات.<br/>
+                            <strong>AWS مسؤولة عن:</strong> نظام التشغيل وتحديث برمجيات قاعدة البيانات والتوسع التلقائي للعتاد.
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-emerald-50/50 dark:bg-slate-850 rounded-2xl border border-emerald-100 dark:border-slate-800">
+                        <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider block mb-1">النوع الثالث: SaaS / Managed</span>
+                        <h4 class="font-bold text-sm text-slate-800 dark:text-slate-200 mb-2">خدمة مدارة بالكامل (مثال: S3 / DynamoDB)</h4>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                            <strong>العميل مسؤول عن:</strong> إدارة الصلاحيات ومن يملك حق الوصول للملفات وتتشفر بياناته المخزنة.<br/>
+                            <strong>AWS مسؤولة عن:</strong> إدارة البنية التحتية بالكامل وتوزيع البيانات وحماية المخدمات وقواعد البيانات وتحديثها.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 4: Well-Architected Pillars -->
+        <section id="pillarsTab" class="tab-content hidden animate-fadeIn">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">الأعمدة الستة لإطار العمل المعماري المتميز (Well-Architected Framework)</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">المعايير المعتمدة من AWS لتصميم أنظمة سحابية متفوقة خالية من العيوب.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Pillar 1 -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-md transition-all">
+                    <div class="w-12 h-12 bg-blue-500/10 text-blue-500 rounded-2xl flex items-center justify-center font-bold text-xl mb-4 font-sans">1</div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">التميز التشغيلي (Operational Excellence)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">التركيز على تشغيل ومراقبة الأنظمة لتقديم قيمة للأعمال، وتحسين العمليات والإجراءات باستمرار ودعم التغيير.</p>
+                    <div class="border-t border-slate-100 dark:border-slate-800 pt-3 flex flex-wrap gap-1">
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Operations as code</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Small frequent changes</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Anticipate failure</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-md transition-all">
+                    <div class="w-12 h-12 bg-red-500/10 text-red-500 rounded-2xl flex items-center justify-center font-bold text-xl mb-4 font-sans">2</div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">الأمن والخصوصية (Security)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">حماية المعلومات والأنظمة والأصول السحابية مع تقييم المخاطر وتطبيق تدابير وقائية لحماية البيانات والتحقق من الهوية.</p>
+                    <div class="border-t border-slate-100 dark:border-slate-800 pt-3 flex flex-wrap gap-1">
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Strong identity foundation</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Traceability</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Least privilege</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-md transition-all">
+                    <div class="w-12 h-12 bg-emerald-500/10 text-emerald-500 rounded-2xl flex items-center justify-center font-bold text-xl mb-4 font-sans">3</div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">الاعتمادية والموثوقية (Reliability)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">قدرة النظام على أداء وظيفته بشكل صحيح، والتعافي التلقائي والسريع من انقطاع الخدمات، والنمو للتوافق مع زيادة الطلب.</p>
+                    <div class="border-t border-slate-100 dark:border-slate-800 pt-3 flex flex-wrap gap-1">
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Automatically recover</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Test recovery procedures</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Scale horizontally</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 4 -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-md transition-all">
+                    <div class="w-12 h-12 bg-purple-500/10 text-purple-500 rounded-2xl flex items-center justify-center font-bold text-xl mb-4 font-sans">4</div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">كفاءة الأداء (Performance Efficiency)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">استخدام الموارد الحسابية بكفاءة لتلبية متطلبات الأنظمة، والحفاظ على هذه الكفاءة مع تغير متطلبات العمل والتقدم التكنولوجي.</p>
+                    <div class="border-t border-slate-100 dark:border-slate-800 pt-3 flex flex-wrap gap-1">
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Democratize technologies</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Go global in minutes</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Serverless</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 5 -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-md transition-all">
+                    <div class="w-12 h-12 bg-orange-500/10 text-orange-500 rounded-2xl flex items-center justify-center font-bold text-xl mb-4 font-sans">5</div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">تحسين التكلفة (Cost Optimization)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">تجنب النفقات الزائدة وغير الضرورية، وتعديل الموارد لتطابق الطلب الفعلي، وفهم التوزيع المالي والتأكد من دفع القيمة المستحقة فقط.</p>
+                    <div class="border-t border-slate-100 dark:border-slate-800 pt-3 flex flex-wrap gap-1">
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Consumption model</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Measure efficiency</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Stop physical spending</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 6 -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 rounded-3xl shadow-sm hover:shadow-md transition-all">
+                    <div class="w-12 h-12 bg-teal-500/10 text-teal-500 rounded-2xl flex items-center justify-center font-bold text-xl mb-4 font-sans">6</div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">الاستدامة البيئية (Sustainability)</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">تقليل التأثيرات البيئية والتلوث الناتج عن تشغيل الأنظمة السحابية (تحسين كفاءة استخدام الموارد والعتاد لتقليل انبعاثات الكربون).</p>
+                    <div class="border-t border-slate-100 dark:border-slate-800 pt-3 flex flex-wrap gap-1">
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Understand impact</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Maximize utilization</span>
+                        <span class="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-[10px] rounded text-slate-500 dark:text-slate-400 font-sans">Anticipate downstream impact</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 5: Pricing & Support -->
+        <section id="pricingTab" class="tab-content hidden animate-fadeIn">
+            <!-- Support Plans -->
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white">خطط الدعم الفني الخاصة بـ AWS (Support Plans)</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-1">تأتي خطط الدعم في 4 مستويات وتعتبر من الأسئلة المتكررة لتمييز الخصائص وتكلفة الاستجابة.</p>
+            </div>
+
+            <!-- Support Table -->
+            <div class="overflow-x-auto bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-sm mb-12">
+                <table class="w-full text-right border-collapse">
+                    <thead>
+                        <tr class="bg-aws-dark text-white border-b border-slate-200 dark:border-slate-800">
+                            <th class="p-4 text-sm font-bold">الخطة (Plan)</th>
+                            <th class="p-4 text-sm font-bold">التكلفة والوصول</th>
+                            <th class="p-4 text-sm font-bold">الميزات الإضافية</th>
+                            <th class="p-4 text-sm font-bold">زمن الاستجابة (SLA)</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-xs md:text-sm">
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-850">
+                            <td class="p-4 font-bold text-slate-950 dark:text-slate-50">Basic</td>
+                            <td class="p-4">مجانية لجميع العملاء.</td>
+                            <td class="p-4">دعم للفواتير والحساب فقط. فحص 7 خصائص أساسية في Trusted Advisor.</td>
+                            <td class="p-4 text-slate-500 dark:text-slate-400">لا يوجد دعم فني للمشكلات البرمجية.</td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-850">
+                            <td class="p-4 font-bold text-slate-950 dark:text-slate-50">Developer</td>
+                            <td class="p-4">تبدأ من 29$/الشهر. شخص واحد معتمد.</td>
+                            <td class="p-4">دعم فني عبر البريد الإلكتروني خلال أوقات العمل الرسمية. توصيات عامة.</td>
+                            <td class="p-4">
+                                <span class="block">أقل من 24 ساعة للمسائل العامة</span>
+                                <span class="block text-aws-orange">أقل من 12 ساعة لتعطل النظام (Impaired)</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-850">
+                            <td class="p-4 font-bold text-slate-950 dark:text-slate-50">Business</td>
+                            <td class="p-4">تبدأ من 100$/الشهر. عدد تذاكر مفتوح.</td>
+                            <td class="p-4">دعم 24/7 عبر الهاتف والدردشة. الوصول لكامل مزايا Trusted Advisor. دعم برمجيات الطرف الثالث.</td>
+                            <td class="p-4">
+                                <span class="block">أقل من 4 ساعات لنظام معطل بالكامل</span>
+                                <span class="block text-aws-orange font-semibold">أقل من ساعة لتعطل النظام الرئيسي (Production Down)</span>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-slate-50 dark:hover:bg-slate-850">
+                            <td class="p-4 font-bold text-slate-950 dark:text-slate-50">Enterprise</td>
+                            <td class="p-4">تبدأ من 15,000$/الشهر. دعم كامل.</td>
+                            <td class="p-4 text-right">
+                                <span class="block font-semibold text-aws-orange">📌 وجود مستشار تقني مخصص (TAM)</span>
+                                <span class="block">📌 مرشد الحساب والفواتير (Support Concierge)</span>
+                                <span class="block">مراجعة العمليات التشغيلية والتدريب المشترك.</span>
+                            </td>
+                            <td class="p-4">
+                                <span class="block text-emerald-500 font-bold">أقل من 15 دقيقة لتعطل نظام حرج جداً (Business-Critical Down)</span>
+                                <span class="block">أقل من ساعة لنظام إنتاج معطل</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Cost Management Tools Grid -->
+            <div class="text-center mb-8">
+                <h3 class="text-xl font-bold text-slate-900 dark:text-white">أدوات إدارة التكلفة والفوترة (Cost Management Tools)</h3>
+                <p class="text-slate-500 dark:text-slate-400 text-xs mt-1">الفرق الجوهري بين أدوات التسعير والمراقبة والتنبؤ بالتكلفة.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Tool 1 -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">آلة حاسبة التسعير (AWS Pricing Calculator)</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        تُستخدم **قبل** بناء أي مشروع أو حجز السيرفرات السحابية. تساعدك في تقدير التكلفة المتوقعة لحزمة الموارد التي تنوي توفيرها مستقبلاً.
+                    </p>
+                </div>
+                <!-- Tool 2 -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">ميزانية AWS (AWS Budgets)</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        تُستخدم لوضع ميزانية وحلول مالية محددة. ترسل تنبيهات **قبل** أن تتجاوز التكلفة الحد الأقصى المقرر، حيث تحتوي على تنبؤ ذكي للتكلفة المتوقعة (**Forecasted Cost Alerts**).
+                    </p>
+                </div>
+                <!-- Tool 3 -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-5 rounded-2xl shadow-sm">
+                    <h4 class="font-bold text-slate-900 dark:text-white mb-2">مكتشف التكلفة (AWS Cost Explorer)</h4>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                        يُستخدم بعد الاستهلاك الفعلي لمشاهدة رسوم بيانية وتفاصيل التكاليف الفائتة. يوضح لك الفاتورة السابقة والاتجاه المالي الحالي ويتنبأ بالشكل المالي لـ 12 شهراً قادماً.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-8 px-6 border-t border-slate-800 mt-16 text-center text-xs md:text-sm">
+        <p class="mb-2">المنصة التفاعلية لمراجعة اختبار AWS Certified Cloud Practitioner © 2026</p>
+        <p class="font-light text-slate-650">هذه المنصة مخصصة للمراجعة السريعة ولا تتبع لشركة Amazon Web Services الرسمية.</p>
+    </footer>
+
+    <!-- JS Scripts for Data and Interactions -->
+    <script>
+        // Database
+        const servicesData = [
+            { name: "Amazon EC2", nameAr: "خوادم افتراضية مرنة", category: "Compute", desc: "خوادم افتراضية (Virtual Machines) تمنحك تحكماً كاملاً بنظام التشغيل والشبكة والعتاد الافتراضي.", triggers: ["Virtual servers", "Full control over OS", "Guest OS patching", "IaaS"] },
+            { name: "AWS Lambda", nameAr: "الحوسبة بدون مخدمات", category: "Compute", desc: "خدمة حسابية لتشغيل الكود بدون حجز أو إدارة السيرفرات، حيث تعمل استجابةً للأحداث وتغلق تلقائياً.", triggers: ["Serverless compute", "Event-driven", "Short running tasks", "Max 15 minutes", "Run code without provisioning"] },
+            { name: "AWS Fargate", nameAr: "حاويات بدون مخدمات", category: "Compute", desc: "محرك حسابي بدون سيرفرات لتشغيل الحاويات (Docker) دون الحاجة لإدارة أو حجز خوادم EC2.", triggers: ["Serverless container engine", "Run docker without managing instances"] },
+            { name: "Amazon ECS / EKS", nameAr: "إدارة وتوجيه الحاويات", category: "Compute", desc: "خدمات مركزية لإدارة الحاويات وتنسيق تشغيلها سواءً Docker أو Kubernetes.", triggers: ["Orchestrate containers", "Docker containers", "Kubernetes management"] },
+            { name: "AWS Elastic Beanstalk", nameAr: "منصة لنشر التطبيقات", category: "Compute", desc: "منصة كخدمة (PaaS) تقوم برفع الكود الخاص بك فقط، وتتولى الخدمة حجز السيرفرات والموازنات والتوسع تلقائياً.", triggers: ["Platform as a Service (PaaS)", "Upload code", "Automated capacity provisioning", "Quick deployment"] },
+            { name: "Amazon Lightsail", nameAr: "خوادم وحلول مبسطة", category: "Compute", desc: "خوادم وحزم تطوير ويب جاهزة وبسيطة للغاية للمشاريع الصغيرة وبتكلفة منخفضة وثابتة.", triggers: ["Simple VPS", "Low predictable pricing", "Small businesses", "Easy web setup"] },
+            
+            { name: "Amazon S3", nameAr: "تخزين الكائنات اللامحدود", category: "Storage", desc: "تخزين كائنات (Object Storage) آمن وسريع وغير محدود لجميع أنواع الملفات والصور والنسخ الاحتياطية واستضافة المواقع الثابتة.", triggers: ["Object storage", "Static website hosting", "Unlimited storage", "Bucket", "11 nines durability"] },
+            { name: "S3 Standard-IA", nameAr: "تخزين وصول غير متكرر", category: "Storage", desc: "فئة تخزين لملفات لا تطلبها كثيراً، ولكن يجب الحصول عليها فوراً وبسرعة جزء من الثانية عند طلبها.", triggers: ["Infrequently accessed", "Millisecond access", "Lower storage cost", "Retrieval fee"] },
+            { name: "S3 Glacier", nameAr: "أرشيف منخفض التكلفة", category: "Storage", desc: "فئات تخزين لأرشفة البيانات طويلة المدى بتكلفة متدنية جداً مع أوقات استرجاع تتراوح من دقائق إلى 12 ساعة.", triggers: ["Archival data", "Backup storage", "Retrieval times", "Lowest cost storage"] },
+            { name: "Amazon EBS", nameAr: "قرص صلب افتراضي للـ EC2", category: "Storage", desc: "قرص تخزين بيانات في نفس منطقة التوفر يتم ربطه بسيرفر EC2 كقرص نظام أو تخزين إضافي ويحتفظ بالبيانات عند إغلاق السيرفر.", triggers: ["Virtual hard drive", "Block storage", "Persists data after termination", "Single AZ"] },
+            { name: "Amazon EFS", nameAr: "مجلد مشترك بين السيرفرات", category: "Storage", desc: "نظام ملفات مشترك وقابل للتوسع تلقائياً يمكن ربطه بالعديد من سيرفرات EC2 في وقت واحد وعبر عدة مناطق توفر.", triggers: ["Shared storage", "Linux file system (NFS)", "Access from multiple instances concurrently"] },
+            { name: "AWS Storage Gateway", nameAr: "بوابة التخزين الهجين", category: "Storage", desc: "ربط وحدات التخزين المحلية للشركة بوحدات تخزين سحابة AWS بشكل هجين لتسهيل النسخ والأرشفة.", triggers: ["Hybrid cloud storage", "Connect on-premises to AWS storage"] },
+
+            { name: "Amazon RDS", nameAr: "قواعد البيانات العلاقة المدارة", category: "Database", desc: "خدمة قواعد بيانات علاقة (Relational) مدارة بالكامل تدعم محركات شهيرة مثل PostgreSQL و MySQL.", triggers: ["Relational database", "SQL", "Transactional database", "Multi-AZ (HA)", "Read Replicas (Performance)"] },
+            { name: "Amazon Aurora", nameAr: "قاعدة بيانات أورورا المتميزة", category: "Database", desc: "قاعدة بيانات علاقة مصممة من AWS متوافقة تماماً مع MySQL و PostgreSQL وسريعة جداً مع نسخ تلقائي للملفات.", triggers: ["High performance relational DB", "MySQL/PostgreSQL compatible", "Auto-scaling storage"] },
+            { name: "Amazon DynamoDB", nameAr: "قواعد بيانات NoSQL سريعة", category: "Database", desc: "قاعدة بيانات غير علاقة (NoSQL) ذات سرعة فائقة جداً وزمن استجابة من رقم أحادي بالميلي ثانية وبدون خوادم.", triggers: ["NoSQL", "Key-value database", "Single-digit millisecond latency", "Serverless DB"] },
+            { name: "Amazon Redshift", nameAr: "مستودع البيانات الضخم", category: "Database", desc: "مستودع بيانات ضخم (Data Warehouse) لتحليل البيانات الكبيرة والذكاء الاصطناعي وبناء تقارير الأعمال السنوية.", triggers: ["Data warehouse", "Analytics", "BI", "Complex queries on massive datasets"] },
+            { name: "Amazon ElastiCache", nameAr: "تخزين الكاش السريع", category: "Database", desc: "قاعدة بيانات سريعة في الذاكرة (In-Memory) لتسريع عمل التطبيقات والمواقع بتخزين الكاش لقواعد البيانات الأساسية.", triggers: ["In-memory database cache", "Redis / Memcached", "Improve DB performance"] },
+
+            { name: "Amazon VPC", nameAr: "الشبكة الافتراضية الخاصة", category: "Networking", desc: "شبكة افتراضية معزولة تماماً داخل سحابة AWS للتحكم بالشبكات والـ Subnets وجدر الحماية وعناوين الـ IP الخاصة بمواردك.", triggers: ["Isolated private network", "Subnets", "Route tables", "Security groups", "Public/Private sections"] },
+            { name: "Amazon Route 53", nameAr: "نظام أسماء النطاقات DNS", category: "Networking", desc: "خدمة توجيه النطاقات وتسجيلها وربط المستخدمين بالسيرفرات والمواقع السحابية وفقاً لسياسات ذكية.", triggers: ["Domain Name System (DNS)", "Global domain registrar", "Routing policies (latency, geolocation)"] },
+            { name: "Amazon CloudFront", nameAr: "شبكة توصيل المحتوى CDN", category: "Networking", desc: "شبكة توصيل وتوزيع محتوى عالمية تقوم بتسريع وصول الملفات للمستخدمين عن طريق نسخ مؤقت في مواقع الأطراف.", triggers: ["Content Delivery Network (CDN)", "Caching content globally", "Edge Locations", "Lower latency"] },
+            { name: "AWS Direct Connect", nameAr: "اتصال فيزيائي خاص", category: "Networking", desc: "اتصال شبكي فيزيائي مباشر ومخصص يربط مقرات الشركة بـ AWS مباشرة دون المرور بالإنترنت العام لسرعة وأمان ممتازين.", triggers: ["Dedicated physical connection", "Bypass the public internet", "Private network fiber"] },
+            { name: "Elastic Load Balancing (ELB)", nameAr: "موزع حركة المرور", category: "Networking", desc: "موزع وحكم لحركة المرور يوزع طلبات المستخدمين بالتساوي على السيرفرات لضمان عدم سقوط الخوادم.", triggers: ["Distribute incoming traffic", "Health checks", "ALB Layer 7", "NLB Layer 4"] },
+
+            { name: "AWS IAM", nameAr: "إدارة الهوية والوصول", category: "Security", desc: "بوابة التحكم بالمستخدمين والصلاحيات ومفاتيح الوصول للدخول إلى موارد AWS وتطبيق الصلاحيات الأدنى والمصادقة الثنائية.", triggers: ["Users, Groups, Roles, Policies", "MFA", "Principle of least privilege", "Control access"] },
+            { name: "AWS Shield", nameAr: "الحماية من هجمات DDoS", category: "Security", desc: "خدمة حماية متقدمة ومجانية تلقائياً لحماية تطبيقات الويب والمواقع من هجمات حجب الخدمة الموزعة.", triggers: ["DDoS protection", "Shield Standard", "Shield Advanced"] },
+            { name: "AWS WAF", nameAr: "جدار حماية تطبيقات الويب", category: "Security", desc: "جدار حماية للويب لفلترة وحجب الطلبات الضارة وحظر الـ IPs وحماية الموقع من ثغرات SQL Injection و XSS في الطبقة السابعة.", triggers: ["SQL Injection protection", "XSS protection", "Web Application Firewall", "Layer 7 security"] },
+            { name: "Amazon Inspector", nameAr: "فاحص ثغرات السيرفرات", category: "Security", desc: "فاحص أمني تلقائي يبحث عن الثغرات الأمنية والبرمجية داخل سيرفرات EC2 والأكواد والحاويات.", triggers: ["Vulnerability scanner", "Security assessment", "Software flaws", "CVEs", "EC2 package inspection"] },
+            { name: "Amazon GuardDuty", nameAr: "المراقب الذكي للتهديدات", category: "Security", desc: "خدمة تعتمد الذكاء الاصطناعي لمراقبة الحساب باستمرار واكتشاف أي هجمات أو اختراقات أو حركات مشبوهة.", triggers: ["Intelligent threat detection", "Continuous monitoring", "Malicious activity", "Uses VPC/DNS logs"] },
+            { name: "AWS KMS", nameAr: "إدارة مفاتيح التشفير", category: "Security", desc: "خدمة لإنشاء وإدارة مفاتيح تشفير البيانات المستخدمة في تشفير ملفات S3 أو أقراص EBS وغيرها.", triggers: ["Encryption keys", "Manage cryptographic keys", "Envelope encryption"] },
+            { name: "AWS Secrets Manager", nameAr: "حافظة كلمات المرور الآمنة", category: "Security", desc: "تخزين وحفظ كلمات مرور قواعد البيانات و الـ API Keys وتغييرها تلقائياً ودورياً بدون مقاطعة الخدمة.", triggers: ["Rotate credentials automatically", "Store DB passwords", "Secret rotation schedule"] },
+            { name: "AWS Artifact", nameAr: "بوابة وثائق الامتثال", category: "Security", desc: "بوابة مجانية لتحميل تقارير الامتثال والشهادات الأمنية العالمية مثل SOC و ISO وتوقيع اتفاقيات الخصوصية.", triggers: ["Compliance reports", "Download audit certificates", "SOC reports", "ISO certificates"] },
+            { name: "AWS Trusted Advisor", nameAr: "المستشار الفني المجاني", category: "Security", desc: "مستشار رقمي يفحص حسابك ويقدم نصائح لتحسين التكلفة والأمن والسرعة والاعتمادية والحدود المفروضة.", triggers: ["5 pillars recommendations", "Cost, Security, Fault Tolerance, Performance, Service Limits"] },
+
+            { name: "Amazon CloudWatch", nameAr: "مراقب الأداء والسجلات", category: "Management", desc: "مراقبة وجمع بيانات الأداء (Metrics) وسجلات العمليات (Logs) وإرسال التنبيهات والأعطال عبر Alarms.", triggers: ["Metrics", "Performance logs", "CPU utilization alarm", "Resource monitoring", "Dashboards"] },
+            { name: "AWS CloudTrail", nameAr: "مدقق العمليات والـ APIs", category: "Management", desc: "تسجيل وتدقيق جميع العمليات والنداءات البرمجية التي تمت في الحساب لمعرفة 'من فعل ماذا ومتى'.", triggers: ["Audit API calls", "Track user activity", "Governance", "Compliance auditing", "Who took action"] },
+            { name: "AWS CloudFormation", nameAr: "البنية التحتية ككود IaC", category: "Management", desc: "إنشاء البنية التحتية والموارد السحابية عن طريق كتابة كود نصي في ملفات نصية JSON أو YAML.", triggers: ["Infrastructure as Code", "Templates (YAML/JSON)", "Automate resource creation"] },
+            { name: "AWS Systems Manager (SSM)", nameAr: "مدير الخوادم والأنظمة", category: "Management", desc: "إدارة وتحديث وتصحيح خوادم EC2 متعددة دفعة واحدة والتحكم بها وتشغيل الأوامر عن بعد وحفظ المتغيرات.", triggers: ["Patch manager", "Run command on EC2", "Central operational hub", "Parameter Store"] },
+            { name: "AWS Config", nameAr: "مدقق إعدادات الموارد", category: "Management", desc: "مراقبة وتسجيل التغييرات في إعدادات الموارد وتقييم مدى مطابقتها للسياسات المقررة تاريخياً.", triggers: ["Audit resource configurations", "Compliance history", "Track configuration changes"] },
+            { name: "AWS Organizations", nameAr: "إدارة الحسابات المتعددة", category: "Management", desc: "إدارة مجموعة من حسابات AWS للشركة وتجميع الفواتير في فاتورة واحدة مركزية للاستفادة من خصم الكمية.", triggers: ["Consolidated billing", "Service Control Policies (SCPs)", "Manage multiple accounts", "Volume discounts"] }
+        ];
+
+        const flashcardsData = [
+            { trigger: "تريد استضافة موقع ويب استاتيكي ثابت (Static Website) وتخزين ملفات غير مهيكلة غير محدودة مع متانة 11 تسعة.", answer: "Amazon S3", desc: "أهم خدمة تخزين كائنات غير محدودة في AWS ومثالية للملفات والمواقع الثابتة." },
+            { trigger: "تحتاج لقاعدة بيانات NoSQL ذات زمن استجابة سريع للغاية من رقم أحادي بالميلي ثانية وتتوسع تلقائياً.", answer: "Amazon DynamoDB", desc: "قاعدة بيانات NoSQL سريعة جداً بدون مخدمات (Serverless)." },
+            { trigger: "تريد تشغيل كود برمجي بدون حجز سيرفرات (Serverless) استجابة لأحداث معينة، مع العلم أن المهمة تستغرق أقل من 15 دقيقة.", answer: "AWS Lambda", desc: "الخدمة السحابية الأشهر للحساب بدون سيرفرات المستند للأحداث." },
+            { trigger: "تريد ربط مقرات شركتك بالسحابة عبر اتصال فيزيائي مخصص ومباشر يمر بعيداً عن الإنترنت العام.", answer: "AWS Direct Connect", desc: "اتصال شبكي خاص وسريع ومستقر جداً للمؤسسات." },
+            { trigger: "تبحث عن خدمة مجانية لحماية موقعك وتطبيقاتك السحابية من هجمات حجب الخدمة الموزعة (DDoS).", answer: "AWS Shield", desc: "درع الحماية الأساسي المجاني وتتوفر منه نسخة متقدمة مدفوعة." },
+            { trigger: "تحتاج لتسجيل وتدقيق جميع العمليات والنداءات البرمجية (API) التي تتم في حسابك لمعرفة من قام بحذف سيرفر معين.", answer: "AWS CloudTrail", desc: "سجل العمليات الذي يجيب على سؤال 'من فعل ماذا ومتى وكيف' لأغراض الحوكمة والامتثال." },
+            { trigger: "تريد مراقبة مستويات أداء السيرفرات (CPU, RAM) وتخزين سجلات العمليات وإرسال تنبيه فوري بالبريد الإلكتروني عند تعطف خادم.", answer: "Amazon CloudWatch", desc: "الخدمة المركزية للمراقبة وجمع المؤشرات والأداء وصناديق السجلات والإنذارات." },
+            { trigger: "تبحث عن خدمة تقدم لك نصائح مستمرة وتفحص حسابك لتحسين التكلفة، والأمن، والسرعة، ومقاومة الأعطال، وحدود الخدمة.", answer: "AWS Trusted Advisor", desc: "المستشار الرقمي المجاني الذي يفحص الحساب وفقاً لأفضل الممارسات." },
+            { trigger: "تريد حساب التكلفة التقديرية للموارد والخدمات السحابية قبل شرائها أو حجزها لبناء خطة ميزانية لمشروع جديد.", answer: "AWS Pricing Calculator", desc: "الأداة الرسمية للتخطيط المالي للمشروعات قبل تفعيل الموارد." },
+            { trigger: "تريد تجميع فواتير حسابات متعددة لشركتك تحت فاتورة واحدة للاستفادة من خصم الكمية وحوكمة السياسات.", answer: "Consolidated Billing (AWS Organizations)", desc: "ميزة الفاتورة الموحدة للتحكم المالي بجميع الحسابات الفرعية وتجميعها." },
+            { trigger: "تريد حجز خوادم EC2 لعمليات حسابية تتحمل المقاطعة ومستعدة للاسترداد بإنذار مدته دقيقتان، للحصول على خصم يصل لـ 90%.", answer: "Spot Instances", desc: "أرخص خيارات التسعير لـ EC2 وتستغل السعة الفائضة لدى AWS." },
+            { trigger: "يلتزم عميل AWS بدفع مبلغ ثابت بالساعة مقابل سعة الحوسبة (EC2, Fargate) لمدة سنة أو ثلاث سنوات للحصول على خصم 72%.", answer: "Savings Plans", desc: "نموذج تسعير حديث ومرن يعتمد على الالتزام بالقيمة المالية المستهلكة." },
+            { trigger: "الخيار الأمني الصارم الذي يمنحك مخدم فيزيائي مخصص بالكامل لشركتك لتلبية تراخيص البرامج المرتبطة بالعتاد (BYOL).", answer: "Dedicated Hosts", desc: "خوادم فيزيائية مخصصة لعميل واحد بالكامل لحل مشكلات التراخيص والامتثال الصارم." },
+            { trigger: "تحتاج للوصول لشهادات الأمان العالمية للشركة (مثل SOC, ISO) وتحميل تقارير الامتثال الأمنية لتقديمها للمدققين.", answer: "AWS Artifact", desc: "البوابة الرسمية المجانية لتحميل وثائق وتقارير الامتثال والأمان." },
+            { trigger: "تريد حفظ وإدارة كلمات مرور قواعد البيانات و الـ API keys مع تدويرها وتغييرها تلقائياً دون مقاطعة العمليات.", answer: "AWS Secrets Manager", desc: "حافظة كلمات المرور الآمنة التي تدعم التدوير التلقائي للبيانات الحساسة." },
+            { trigger: "تريد حماية موقعك الإلكتروني من ثغرات SQL Injection و Cross-Site Scripting (XSS) في الطبقة السابعة (Application).", answer: "AWS WAF", desc: "جدار حماية تطبيقات الويب الذي يقوم بفلترة وحجب الطلبات الضارة." },
+            { trigger: "تريد فك الارتباط (Decouple) بين أجزاء التطبيق المختلفة وميكروخدماته عبر طابور رسائل غير متزامن لتفادي سقوط النظام.", answer: "Amazon SQS", desc: "طابور الرسائل البسيط لضمان معالجة العمليات دون فقدانها وتخفيف العبء." },
+            { trigger: "تريد بناء شبكة الموارد والخدمات السحابية بالكامل بكتابة ملف نصي (YAML / JSON) وتكرارها آلياً دون حجز يدوي.", answer: "AWS CloudFormation", desc: "أداة البنية التحتية ككود (IaC) لتوليد الموارد تلقائياً عبر قوالب جاهزة." },
+            { trigger: "تريد فحص خوادم EC2 وحواسب الحاويات وكود Lambda تلقائياً للبحث عن الثغرات البرمجية والبرامج الضارة.", answer: "Amazon Inspector", desc: "الفاحص الأمني الآلي للبحث عن الثغرات الأمنية للبرمجيات المثبتة." },
+            { trigger: "تريد الاستعلام المباشر وعمل تحليلات على ملفات CSV/JSON المخزنة في S3 باستخدام لغة الاستعلامات SQL دون الحاجة لنقلها.", answer: "Amazon Athena", desc: "محرك الاستعلام التفاعلي بدون سيرفرات للبحث المباشر داخل S3 بـ SQL." }
+        ];
+
+        let currentCardIndex = 0;
+        let isFlipped = false;
+
+        // Init
+        document.addEventListener("DOMContentLoaded", () => {
+            renderServices(servicesData);
+            document.getElementById("totalCount").innerText = servicesData.length;
+            document.getElementById("totalCardsNum").innerText = flashcardsData.length;
+            loadFlashcard();
+            
+            // Search Input listener
+            document.getElementById("searchInput").addEventListener("input", (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                const resetBtn = document.getElementById("resetSearchBtn");
+                if (query) {
+                    resetBtn.classList.remove("hidden");
+                } else {
+                    resetBtn.classList.add("hidden");
+                }
+                performSearchAndFilter();
+            });
+
+            // Theme Toggle listener
+            const themeBtn = document.getElementById("themeToggle");
+            themeBtn.addEventListener("click", () => {
+                document.documentElement.classList.toggle("dark");
+                document.getElementById("sunIcon").classList.toggle("hidden");
+                document.getElementById("moonIcon").classList.toggle("hidden");
+            });
+        });
+
+        // Tab Switching
+        function switchTab(tabId) {
+            // Hide all contents
+            document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+            // Show target content
+            document.getElementById(tabId).classList.remove("hidden");
+            
+            // Reset nav buttons styling
+            document.querySelectorAll(".tab-btn").forEach(btn => {
+                btn.className = "tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-center font-semibold text-sm transition-all duration-200 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-850 flex items-center justify-center gap-2";
+            });
+            // Apply active styling
+            const activeBtn = document.getElementById(`btn-${tabId}`);
+            activeBtn.className = "tab-btn flex-1 min-w-[120px] py-3 px-4 rounded-xl text-center font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 bg-aws-dark text-white shadow-md";
+        }
+
+        // Render Services Grid
+        function renderServices(data) {
+            const grid = document.getElementById("servicesGrid");
+            grid.innerHTML = "";
+            
+            if (data.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 text-center text-slate-500 dark:text-slate-400">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <p class="text-base font-semibold">لم نجد أي خدمات سحابية تطابق هذا البحث!</p>
+                        <p class="text-xs mt-1">حاول كتابة مصطلح آخر أو إعادة ضبط الفلاتر.</p>
+                    </div>
+                `;
+                document.getElementById("displayedCount").innerText = 0;
+                return;
+            }
+
+            data.forEach(service => {
+                const card = document.createElement("div");
+                card.className = "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between";
+                
+                // Triggers HTML
+                let triggersHtml = "";
+                service.triggers.forEach(trig => {
+                    triggersHtml += `<span class="px-2 py-1 bg-aws-accent/10 dark:bg-aws-accent/20 text-aws-accent dark:text-blue-300 text-[10px] font-semibold font-inter rounded-md border border-aws-accent/20">${trig}</span>`;
+                });
+
+                // Icon Background based on category
+                let catBg = "bg-blue-500/10 text-blue-500";
+                if (service.category === "Storage") catBg = "bg-orange-500/10 text-orange-500";
+                if (service.category === "Database") catBg = "bg-emerald-500/10 text-emerald-500";
+                if (service.category === "Networking") catBg = "bg-purple-500/10 text-purple-500";
+                if (service.category === "Security") catBg = "bg-red-500/10 text-red-500";
+                if (service.category === "Management") catBg = "bg-teal-500/10 text-teal-500";
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-lg ${catBg}">${service.category}</span>
+                            <span class="text-[10px] text-slate-400 font-semibold font-inter">AWS Service</span>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-0.5 tracking-wide font-inter text-right">${service.name}</h3>
+                        <h4 class="text-xs font-semibold text-aws-orange mb-3 text-right">${service.nameAr}</h4>
+                        <p class="text-xs md:text-sm text-slate-500 dark:text-slate-400 leading-relaxed font-light mb-6 text-right">${service.desc}</p>
+                    </div>
+                    <div>
+                        <div class="border-t border-slate-100 dark:border-slate-800 pt-4 text-right">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase block mb-2 tracking-wider">الكلمات الدلالية في الأسئلة (Exam Triggers):</span>
+                            <div class="flex flex-wrap gap-1.5 justify-end">${triggersHtml}</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            
+            document.getElementById("displayedCount").innerText = data.length;
+        }
+
+        // Search & Filter Logic
+        let activeCategory = "All";
+        
+        function filterCategory(category) {
+            activeCategory = category;
+            
+            // Adjust buttons styling
+            document.querySelectorAll(".category-btn").forEach(btn => {
+                if (btn.innerText.includes(category) || (category === "All" && btn.innerText === "الكل")) {
+                    btn.className = "category-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap bg-aws-accent text-white shadow-sm transition-all duration-200";
+                } else {
+                    btn.className = "category-btn px-4 py-2 rounded-lg text-xs font-semibold whitespace-nowrap bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 transition-all duration-200";
+                }
+            });
+
+            performSearchAndFilter();
+        }
+
+        function performSearchAndFilter() {
+            const query = document.getElementById("searchInput").value.toLowerCase().trim();
+            
+            let filtered = servicesData;
+            
+            // 1. Filter by category
+            if (activeCategory !== "All") {
+                filtered = filtered.filter(item => item.category === activeCategory);
+            }
+            
+            // 2. Filter by search query
+            if (query) {
+                filtered = filtered.filter(item => {
+                    return item.name.toLowerCase().includes(query) ||
+                           item.nameAr.toLowerCase().includes(query) ||
+                           item.desc.toLowerCase().includes(query) ||
+                           item.triggers.some(trig => trig.toLowerCase().includes(query));
+                });
+            }
+
+            renderServices(filtered);
+        }
+
+        function clearSearch() {
+            document.getElementById("searchInput").value = "";
+            document.getElementById("resetSearchBtn").classList.add("hidden");
+            filterCategory("All");
+        }
+
+        // Flashcards Navigation
+        function loadFlashcard() {
+            isFlipped = false;
+            document.getElementById("flashcard-inner").classList.remove("rotate-y-180");
+            
+            const card = flashcardsData[currentCardIndex];
+            
+            setTimeout(() => {
+                document.getElementById("card-trigger-text").innerText = card.trigger;
+                document.getElementById("card-service-name").innerText = card.answer;
+                document.getElementById("card-arabic-desc").innerText = card.desc;
+                
+                document.getElementById("currentCardNum").innerText = currentCardIndex + 1;
+                
+                // Update Progress bar
+                const percent = ((currentCardIndex + 1) / flashcardsData.length) * 100;
+                document.getElementById("progressBar").style.width = `${percent}%`;
+            }, isFlipped ? 300 : 0);
+        }
+
+        function flipCard() {
+            isFlipped = !isFlipped;
+            const inner = document.getElementById("flashcard-inner");
+            if (isFlipped) {
+                inner.classList.add("rotate-y-180");
+            } else {
+                inner.classList.remove("rotate-y-180");
+            }
+        }
+
+        function nextCard() {
+            if (currentCardIndex < flashcardsData.length - 1) {
+                currentCardIndex++;
+                loadFlashcard();
+            } else {
+                alert("تهانينا! لقد أنهيت مراجعة جميع الكروت الذكية 🎉");
+            }
+        }
+
+        function prevCard() {
+            if (currentCardIndex > 0) {
+                currentCardIndex--;
+                loadFlashcard();
+            }
+        }
+
+        function shuffleCards() {
+            // Fisher-Yates Shuffle
+            for (let i = flashcardsData.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [flashcardsData[i], flashcardsData[j]] = [flashcardsData[j], flashcardsData[i]];
+            }
+            currentCardIndex = 0;
+            loadFlashcard();
+            alert("تم إعادة ترتيب الكروت بشكل عشوائي! ابدأ المذاكرة الآن 🔀");
+        }
+    </script>
+</body>
+</html>

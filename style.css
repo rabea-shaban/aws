@@ -1456,3 +1456,84 @@ button, input, select, textarea {
     grid-template-columns: 1fr;
   }
 }
+
+/* ==========================================================================
+   Footer Styles
+   ========================================================================== */
+.app-footer {
+  margin-top: 48px;
+  padding: 24px 32px;
+}
+
+/* If app-container has room, push footer to the bottom */
+@media (min-height: 800px) {
+  .app-footer {
+    margin-top: auto;
+  }
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.footer-left, .footer-right {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-right {
+  text-align: right;
+}
+
+.footer-copyright {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.footer-copyright span {
+  color: var(--accent-orange);
+}
+
+.footer-purpose {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.footer-dev {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.footer-dev .highlight {
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+.footer-role {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  
+  .footer-left, .footer-right {
+    text-align: center;
+    align-items: center;
+  }
+}
+

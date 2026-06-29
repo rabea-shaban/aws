@@ -496,8 +496,8 @@ function renderQuestionCard() {
     const isSelected = userSelections.includes(letter);
     if (isSelected) choiceItem.classList.add('selected');
 
-    // In Study Mode, if Checked: apply styling immediately
-    if (state.mode === 'study' && isChecked) {
+    // If Checked: apply styling immediately
+    if (isChecked) {
       choiceItem.disabled = true; // Lock option clicks
       
       const isCorrectOption = question.correctAnswer.includes(letter);
@@ -516,7 +516,7 @@ function renderQuestionCard() {
     `;
 
     choiceItem.addEventListener('click', () => {
-      if (state.mode === 'study' && isChecked) return; // Prevent clicking if checked
+      if (isChecked) return; // Prevent clicking if checked
       handleOptionSelect(letter, isMultiSelect, question.correctAnswer.length);
     });
 
@@ -525,8 +525,8 @@ function renderQuestionCard() {
 
   container.appendChild(choicesList);
 
-  // Explanation Feedback Box (Study Mode Checked OR Exam Review)
-  if (state.mode === 'study' && isChecked) {
+  // Explanation Feedback Box (Checked)
+  if (isChecked) {
     const feedbackBox = document.createElement('div');
     const userIsCorrect = isAnswerCorrect(userSelections, question.correctAnswer);
     feedbackBox.className = `feedback-box ${userIsCorrect ? 'correct' : 'incorrect'}`;
@@ -617,16 +617,21 @@ function updateWorkspaceControls() {
     flagIcon.classList.remove('flagged');
   }
 
-  // Check Answer button (Study Mode Only)
-  if (state.mode === 'study') {
-    checkBtn.style.display = 'inline-flex';
-    const isChecked = state.checkedAnswers.has(state.currentQuestionIndex);
-    const hasSelection = state.userAnswers[state.currentQuestionIndex] && state.userAnswers[state.currentQuestionIndex].length > 0;
+  // Check Answer button (Visible in both Study and Exam modes)
+  checkBtn.style.display = 'inline-flex';
+  const isChecked = state.checkedAnswers.has(state.currentQuestionIndex);
+  const hasSelection = state.userAnswers[state.currentQuestionIndex] && state.userAnswers[state.currentQuestionIndex].length > 0;
 
-    checkBtn.disabled = !hasSelection || isChecked;
-    checkBtn.textContent = isChecked ? 'Answer Checked' : 'Check Answer';
+  checkBtn.disabled = !hasSelection || isChecked;
+  
+  if (isChecked) {
+    checkBtn.textContent = 'Submitted / تم الإرسال';
+    checkBtn.classList.remove('btn-primary');
+    checkBtn.classList.add('btn-secondary');
   } else {
-    checkBtn.style.display = 'none';
+    checkBtn.textContent = 'Submit / إرسال';
+    checkBtn.classList.remove('btn-secondary');
+    checkBtn.classList.add('btn-primary');
   }
 }
 

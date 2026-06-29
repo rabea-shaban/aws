@@ -239,6 +239,14 @@ button, input, select, textarea {
   border-color: var(--text-secondary);
 }
 
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  pointer-events: none;
+}
+
 .btn-accent {
   background-color: var(--accent-orange);
   color: #ffffff;
